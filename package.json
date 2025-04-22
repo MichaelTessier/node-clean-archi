@@ -1,0 +1,21 @@
+{
+  "name": "node-clean-archi",
+  "packageManager": "yarn@4.9.1",
+  "scripts": {
+    "dev": "nodemon",
+    "lint": "prettier --check ."
+  },
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "@types/body-parser": "^1.19.5",
+    "@types/express": "^5.0.1",
+    "nodemon": "^3.1.9",
+    "prettier": "^3.5.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
+}
