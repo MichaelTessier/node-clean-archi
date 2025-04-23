@@ -1,5 +1,5 @@
 import { Controller, Get, SuccessResponse, Post, Delete, Route, Body, Path, Tags } from "tsoa";
-import { Book, CreateBookInput, GetBookIdParams } from "./book.interface";
+import { Book, CreateBookInput, GetBookIdParams } from "../../../../core/book.interface";
 import { createBookValidation, getBookValidation } from "./book.schema";
 
 @Route("books")

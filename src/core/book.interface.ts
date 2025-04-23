@@ -6,7 +6,7 @@ export interface Book {
   totalPages: number;
 }
 
-export interface CreateBookInput extends Omit<Book, 'title'|'summary'> {}
+export interface CreateBookInput extends Pick<Book, 'title'|'summary'|'author'|'totalPages'> {}
 
 
 export type GetBookIdParams = string
