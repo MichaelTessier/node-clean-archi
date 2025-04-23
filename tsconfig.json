@@ -3,7 +3,7 @@
     "target": "es2016",
     "module": "commonjs",
     "lib": [
-      "es2020",
+      "es2021",
       "dom"
     ],
     "emitDecoratorMetadata": true,
@@ -13,7 +13,9 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "strict": true,
+    "strictPropertyInitialization": false,
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
   }
 }
+//lib es2021

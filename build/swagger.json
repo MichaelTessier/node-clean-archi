@@ -1,0 +1,215 @@
+{
+	"openapi": "3.0.0",
+	"components": {
+		"examples": {},
+		"headers": {},
+		"parameters": {},
+		"requestBodies": {},
+		"responses": {},
+		"schemas": {
+			"Book": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"title": {
+						"type": "string"
+					},
+					"summary": {
+						"type": "string"
+					},
+					"author": {
+						"type": "string"
+					},
+					"totalPages": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"id",
+					"title",
+					"summary",
+					"author",
+					"totalPages"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Pick_Book.Exclude_keyofBook.title-or-summary__": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"author": {
+						"type": "string"
+					},
+					"totalPages": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"id",
+					"author",
+					"totalPages"
+				],
+				"type": "object",
+				"description": "From T, pick a set of properties whose keys are in the union K"
+			},
+			"CreateBookInput": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"author": {
+						"type": "string"
+					},
+					"totalPages": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"id",
+					"author",
+					"totalPages"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"GetBookIdParams": {
+				"type": "string"
+			}
+		},
+		"securitySchemes": {}
+	},
+	"info": {
+		"title": "node-clean-archi",
+		"contact": {}
+	},
+	"paths": {
+		"/books": {
+			"get": {
+				"operationId": "List",
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/Book"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"summary": "Get all books",
+				"tags": [
+					"books"
+				],
+				"security": [],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "Create",
+				"responses": {
+					"201": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Book"
+								}
+							}
+						}
+					}
+				},
+				"summary": "Create a new book",
+				"tags": [
+					"books"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"description": "- Book details",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateBookInput",
+								"description": "- Book details"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/books/{id}": {
+			"get": {
+				"operationId": "GetById",
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Book"
+								}
+							}
+						}
+					}
+				},
+				"summary": "Get a book by ID",
+				"tags": [
+					"books"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"description": "- Book ID",
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"delete": {
+				"operationId": "Delete",
+				"responses": {
+					"204": {
+						"description": ""
+					}
+				},
+				"summary": "Delete a book by ID",
+				"tags": [
+					"books"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"description": "- Book ID",
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/GetBookIdParams"
+						}
+					}
+				]
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "http://localhost:8000",
+			"description": "Localhost"
+		}
+	]
+}
