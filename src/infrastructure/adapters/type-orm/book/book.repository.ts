@@ -1,4 +1,4 @@
-import { Book, CreateBookInput, GetBookIdParams } from "../../../../core/book.interface";
+import { Book, CreateBookInput, BookIdParam } from "../../../../core/book.interface";
 import { BookRepository } from "../../../../core/ports/database.port";
 import { AppDataSource, isInitialized } from "../data-source";
 import BookEntity from "./book.entity";
@@ -43,7 +43,7 @@ class TypeOrmBookRepository implements BookRepository {
     return book ? book.toDomainEntity() : null
   }
 
-  async delete(id: GetBookIdParams): Promise<boolean> {
+  async delete(id: BookIdParam): Promise<boolean> {
     await isInitialized()
 
     const result = await AppDataSource.getRepository(BookEntity).delete(id)

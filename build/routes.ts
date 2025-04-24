@@ -24,24 +24,20 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "Pick_Book.Exclude_keyofBook.title-or-summary__": {
+    "BookIdParam": {
         "dataType": "refAlias",
-        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"id":{"dataType":"string","required":true},"author":{"dataType":"string","required":true},"totalPages":{"dataType":"double","required":true}},"validators":{}},
+        "type": {"dataType":"string","validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "CreateBookInput": {
         "dataType": "refObject",
         "properties": {
-            "id": {"dataType":"string","required":true},
+            "title": {"dataType":"string","required":true},
+            "summary": {"dataType":"string","required":true},
             "author": {"dataType":"string","required":true},
             "totalPages": {"dataType":"double","required":true},
         },
         "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "GetBookIdParams": {
-        "dataType": "refAlias",
-        "type": {"dataType":"string","validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 };
@@ -91,7 +87,7 @@ export function RegisterRoutes(app: Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         const argsBookController_getById: Record<string, TsoaRoute.ParameterSchema> = {
-                id: {"in":"path","name":"id","required":true,"dataType":"string"},
+                id: {"in":"path","name":"id","required":true,"ref":"BookIdParam"},
         };
         app.get('/books/:id',
             ...(fetchMiddlewares<RequestHandler>(BookController)),
@@ -151,7 +147,7 @@ export function RegisterRoutes(app: Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         const argsBookController_delete: Record<string, TsoaRoute.ParameterSchema> = {
-                id: {"in":"path","name":"id","required":true,"ref":"GetBookIdParams"},
+                id: {"in":"path","name":"id","required":true,"ref":"BookIdParam"},
         };
         app.delete('/books/:id',
             ...(fetchMiddlewares<RequestHandler>(BookController)),

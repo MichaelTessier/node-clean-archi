@@ -1,6 +1,10 @@
 import { Controller, Get, SuccessResponse, Post, Delete, Route, Body, Path, Tags } from "tsoa";
-import { Book, CreateBookInput, GetBookIdParams } from "../../../../core/book.interface";
+import { Book, CreateBookInput, BookIdParam } from "../../../../core/book.interface";
 import { createBookValidation, getBookValidation } from "./book.schema";
+import BookListUseCase from "../../../../core/use-cases/book-list.use-case";
+import GetBookUseCase from "../../../../core/use-cases/get-book.use-case";
+import CreateBookUseCase from "../../../../core/use-cases/create-book.use-case";
+import DeleteBookUseCase from "../../../../core/use-cases/delete-book.use-case";
 
 @Route("books")
 @Tags("books")
@@ -16,7 +20,7 @@ export class BookController extends Controller {
   @Get()
   @SuccessResponse(200)
   async list(): Promise<Book[]> {
-    return []
+    return await new BookListUseCase().execute()
   }
 
 
@@ -28,7 +32,7 @@ export class BookController extends Controller {
   @Get('{id}')
   @SuccessResponse(200)
   async getById(
-    @Path() id: string
+    @Path() id: BookIdParam
   ): Promise<Book> {
     const bookId = getBookValidation.decodeBookId(id)
 
@@ -36,13 +40,13 @@ export class BookController extends Controller {
       throw new Error("Invalid book ID")
     }
 
-    return {
-      id: '1',
-      title: 'Book Title',
-      summary: 'Book Summary',
-      author: 'Book Author',
-      totalPages: 100,
+    const book = await new GetBookUseCase().execute(bookId.data)
+
+    if (book === 'Book not found') {
+      throw new Error("Book not found")
     }
+
+    return book
   }
 
   /**
@@ -61,13 +65,9 @@ export class BookController extends Controller {
       throw inputDecoded.error.toString()
     }
 
-    return {
-      id: '1',
-      title: 'Book Title',
-      summary: 'Book Summary',
-      author: 'Book Author',
-      totalPages: 100,
-    }
+    const book = await new CreateBookUseCase().execute(inputDecoded.data)
+
+    return book
   }
 
 
@@ -78,12 +78,18 @@ export class BookController extends Controller {
   @Delete('{id}')
   @SuccessResponse(204)
   async delete(
-    @Path() id: GetBookIdParams
+    @Path() id: BookIdParam
   ): Promise<void> {
     const bookId = getBookValidation.decodeBookId(id)
 
     if (!bookId.success) {
       throw new Error("Invalid book ID")
+    }
+
+    const book = await new DeleteBookUseCase().execute(bookId.data)
+    
+    if (book === 'Book not found') {
+      throw new Error("Book not found")
     }
 
     return

@@ -9,4 +9,4 @@ export interface Book {
 export interface CreateBookInput extends Pick<Book, 'title'|'summary'|'author'|'totalPages'> {}
 
 
-export type GetBookIdParams = string
+export type BookIdParam = string
