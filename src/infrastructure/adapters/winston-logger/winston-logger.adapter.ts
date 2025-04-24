@@ -1,7 +1,7 @@
 import winston from "winston";
 import { Logger } from "../../../core/ports/logger.port";
 
-type LogLevel = "error" | "warn" | "info" | "debug";
+export type LogLevel = "error" | "warn" | "info" | "debug";
 
 export class WinstonLogger implements Logger {
   private logger: winston.Logger;
