@@ -5,11 +5,14 @@ import { RegisterRoutes } from "../../../build/routes";
 import swaggerDocs from "../../../build/swagger.json";
 
 import config from "./api.config";
+import { errorHandler } from "./error-handler";
 
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+app.use(errorHandler)
 
 app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs))
 RegisterRoutes(app);

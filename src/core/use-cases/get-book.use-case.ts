@@ -12,12 +12,12 @@ class GetBookUseCase {
     this.bookRepository = container.resolve<BookRepository>('BookRepository');
   }
 
-  async execute(id: BookIdParam): Promise<Book | 'Book not found'> {
+  async execute(id: BookIdParam): Promise<Book | 'BOOK_NOT_FOUND'> {
     this.logger.debug('[GetBook] execute');
 
     const data = await this.bookRepository.findById(id)
 
-    return data ?? 'Book not found'
+    return data ?? 'BOOK_NOT_FOUND'
   }
 }
 export default GetBookUseCase;

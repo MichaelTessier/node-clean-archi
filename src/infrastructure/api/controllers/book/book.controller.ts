@@ -1,10 +1,11 @@
-import { Controller, Get, SuccessResponse, Post, Delete, Route, Body, Path, Tags, Security } from "tsoa";
+import { Controller, Get, SuccessResponse, Post, Delete, Route,Response,  Body, Path, Tags, Security } from "tsoa";
 import { Book, CreateBookInput, BookIdParam } from "../../../../core/book.interface";
 import { createBookValidation, getBookValidation } from "./book.schema";
 import BookListUseCase from "../../../../core/use-cases/book-list.use-case";
 import GetBookUseCase from "../../../../core/use-cases/get-book.use-case";
 import CreateBookUseCase from "../../../../core/use-cases/create-book.use-case";
 import DeleteBookUseCase from "../../../../core/use-cases/delete-book.use-case";
+import { InvalidInputError, NotFoundError } from "../../error-handler";
 
 @Route("books")
 @Tags("books")
@@ -32,19 +33,21 @@ export class BookController extends Controller {
    */
   @Get('{id}')
   @SuccessResponse(200)
+  @Response(400, "Invalid request params")
+  @Response(404, "Book not found")
   async getById(
     @Path() id: BookIdParam
   ): Promise<Book> {
     const bookId = getBookValidation.decodeBookId(id)
 
     if (!bookId.success) {
-      throw new Error("Invalid book ID")
+      throw new InvalidInputError('INVALID_BOOK_ID')
     }
 
     const book = await new GetBookUseCase().execute(bookId.data)
 
-    if (book === 'Book not found') {
-      throw new Error("Book not found")
+    if (book === 'BOOK_NOT_FOUND') {
+      throw new NotFoundError("BOOK_NOT_FOUND")
     }
 
     return book
@@ -57,13 +60,14 @@ export class BookController extends Controller {
    */
   @Post()
   @SuccessResponse(201)
+  @Response(400, "Invalid request params")
   async create(
     @Body() requestBody: CreateBookInput
   ): Promise<Book> {
     const inputDecoded = createBookValidation.decode(requestBody)
 
     if (!inputDecoded.success) {
-      throw inputDecoded.error.toString()
+      throw new InvalidInputError(inputDecoded.error.toString())
     }
 
     const book = await new CreateBookUseCase().execute(inputDecoded.data)
@@ -78,19 +82,21 @@ export class BookController extends Controller {
    */
   @Delete('{id}')
   @SuccessResponse(204)
+  @Response(400, "Invalid request params")
+  @Response(404, "Book not found")
   async delete(
     @Path() id: BookIdParam
   ): Promise<void> {
     const bookId = getBookValidation.decodeBookId(id)
 
     if (!bookId.success) {
-      throw new Error("Invalid book ID")
+      throw new InvalidInputError("INVALID_BOOK_ID")
     }
 
     const book = await new DeleteBookUseCase().execute(bookId.data)
     
-    if (book === 'Book not found') {
-      throw new Error("Book not found")
+    if (book === 'BOOK_NOT_FOUND') {
+      throw new NotFoundError("BOOK_NOT_FOUND")
     }
 
     return

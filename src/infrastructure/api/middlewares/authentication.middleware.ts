@@ -3,6 +3,7 @@ import { AuthenticatedContext } from "../../../core/ports/api.port";
 import { container } from "tsyringe";
 import { UserRepository } from "../../../core/ports/database.port";
 import { ExistingUser, NotExistingUser } from "../../../core/entities/user.entity";
+import { UnauthorizedError } from "../error-handler";
 
 
 export async function expressAuthentication(
@@ -13,13 +14,13 @@ export async function expressAuthentication(
   const token = extractTokenFromRequest(request)
 
   if(token === 'TOKEN_NOT_FOUND') {
-    return Promise.reject(new Error('Token not found'))
+    return Promise.reject(new UnauthorizedError('TOKEN_NOT_FOUND'))
   }
 
   const user = await getUserFromJwt(token)
 
   if(user === 'INVALID_TOKEN' || user === 'UNKNOWN_USER') {
-    return Promise.reject(new Error('Invalid token'))
+    return Promise.reject(new UnauthorizedError('INVALID_TOKEN'))
   }
 
   return Promise.resolve(user)

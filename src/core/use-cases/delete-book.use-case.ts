@@ -12,13 +12,13 @@ class DeleteBookUseCase {
     this.bookRepository = container.resolve<BookRepository>('BookRepository');
   }
 
-  async execute(id: BookIdParam): Promise<void | 'Book not found'> {
+  async execute(id: BookIdParam): Promise<void | 'BOOK_NOT_FOUND'> {
     this.logger.debug('[DeleteBook] execute');
 
     const data = await this.bookRepository.delete(id)
 
     if(!data) {
-      return 'Book not found'
+      return 'BOOK_NOT_FOUND'
     }
   }
 }
