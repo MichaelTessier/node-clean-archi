@@ -1,11 +1,12 @@
 import { Controller, Get, SuccessResponse, Post, Delete, Route,Response,  Body, Path, Tags, Security } from "tsoa";
 import { Book, CreateBookInput, BookIdParam } from "../../../../core/book.interface";
-import { createBookValidation, getBookValidation } from "./book.schema";
+import { createBookValidation, getBookValidation, PostBookOutputDto } from "./book.schema";
 import BookListUseCase from "../../../../core/use-cases/book-list.use-case";
 import GetBookUseCase from "../../../../core/use-cases/get-book.use-case";
 import CreateBookUseCase from "../../../../core/use-cases/create-book.use-case";
 import DeleteBookUseCase from "../../../../core/use-cases/delete-book.use-case";
 import { InvalidInputError, NotFoundError } from "../../error-handler";
+import { list } from "./book.service";
 
 @Route("books")
 @Tags("books")
@@ -21,8 +22,8 @@ export class BookController extends Controller {
    */
   @Get()
   @SuccessResponse(200)
-  async list(): Promise<Book[]> {
-    return await new BookListUseCase().execute()
+  async list() {
+    return await list()
   }
 
 

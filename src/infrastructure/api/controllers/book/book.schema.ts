@@ -9,8 +9,9 @@ export const BookOutputSchema = z.object({
 });
 
 
-// export const GetBookOutputSchema = BookOutputSchema;
-// export const GetBookListOutputSchema = z.array(BookOutputSchema);
+export type GetBookOutputSchema = z.infer<typeof BookOutputSchema>;
+export const GetBookListOutputSchema = z.array(BookOutputSchema);
+export type GetBookListOutputSchema = z.infer<typeof GetBookListOutputSchema>;
 
 export const BookIdSchema = z.string().uuid();
 
@@ -21,7 +22,7 @@ export const PostBookInputSchema = z.object({
   totalPages: z.number().int().positive(),
 })
 
-// export const PostBookOutputDto = BookOutputSchema
+export type PostBookOutputDto = z.infer<typeof BookOutputSchema>
 
 
 export const createBookValidation = {

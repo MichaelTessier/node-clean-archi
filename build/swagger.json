@@ -190,7 +190,25 @@
 							"application/json": {
 								"schema": {
 									"items": {
-										"$ref": "#/components/schemas/Book"
+										"properties": {
+											"totalPages": {
+												"type": "number",
+												"format": "double"
+											},
+											"author": {
+												"type": "string"
+											},
+											"summary": {
+												"type": "string"
+											},
+											"title": {
+												"type": "string"
+											},
+											"id": {
+												"type": "string"
+											}
+										},
+										"type": "object"
 									},
 									"type": "array"
 								}
