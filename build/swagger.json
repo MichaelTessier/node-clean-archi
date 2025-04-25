@@ -7,6 +7,32 @@
 		"requestBodies": {},
 		"responses": {},
 		"schemas": {
+			"PostUserOutput": {
+				"properties": {
+					"accessToken": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"accessToken"
+				],
+				"type": "object"
+			},
+			"PostUserInput": {
+				"properties": {
+					"password": {
+						"type": "string"
+					},
+					"login": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"password",
+					"login"
+				],
+				"type": "object"
+			},
 			"Book": {
 				"properties": {
 					"id": {
@@ -65,13 +91,83 @@
 				"additionalProperties": false
 			}
 		},
-		"securitySchemes": {}
+		"securitySchemes": {
+			"jwt": {
+				"type": "http",
+				"scheme": "bearer",
+				"bearerFormat": "JWT"
+			}
+		}
 	},
 	"info": {
 		"title": "node-clean-archi",
 		"contact": {}
 	},
 	"paths": {
+		"/users/signin": {
+			"post": {
+				"operationId": "Signin",
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PostUserOutput"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"users"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/PostUserInput"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/users/signup": {
+			"post": {
+				"operationId": "Signup",
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PostUserOutput"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"users"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/PostUserInput"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/books": {
 			"get": {
 				"operationId": "List",
@@ -94,7 +190,11 @@
 				"tags": [
 					"books"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
 				"parameters": []
 			},
 			"post": {
@@ -115,7 +215,11 @@
 				"tags": [
 					"books"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
 				"parameters": [],
 				"requestBody": {
 					"description": "- Book details",
@@ -150,7 +254,11 @@
 				"tags": [
 					"books"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
 				"parameters": [
 					{
 						"description": "- Book ID",
@@ -174,7 +282,11 @@
 				"tags": [
 					"books"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
 				"parameters": [
 					{
 						"description": "- Book ID",

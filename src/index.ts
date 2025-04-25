@@ -5,7 +5,7 @@ import 'reflect-metadata'; // Useful ?
 import 'dotenv/config'; 
 
 // Inject dependencies
-import './infrastructure/adapters/adapter.di';
+import './infrastructure/adapters/adapters.di';
 
 // Start API
 import './infrastructure/api';

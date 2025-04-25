@@ -1,4 +1,4 @@
-import { Controller, Get, SuccessResponse, Post, Delete, Route, Body, Path, Tags } from "tsoa";
+import { Controller, Get, SuccessResponse, Post, Delete, Route, Body, Path, Tags, Security } from "tsoa";
 import { Book, CreateBookInput, BookIdParam } from "../../../../core/book.interface";
 import { createBookValidation, getBookValidation } from "./book.schema";
 import BookListUseCase from "../../../../core/use-cases/book-list.use-case";
@@ -8,6 +8,7 @@ import DeleteBookUseCase from "../../../../core/use-cases/delete-book.use-case";
 
 @Route("books")
 @Tags("books")
+@Security("jwt")
 export class BookController extends Controller {
   constructor() {
     super();

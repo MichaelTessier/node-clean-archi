@@ -4,6 +4,7 @@ import { DataSource } from 'typeorm'
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies'
 import BookEntity from './book/book.entity'
 import migrations from './migrations'
+import UserEntity from './user/user.entity'
 
 const ConfigSchema = z.object({
   host: z.string().min(1),
@@ -28,7 +29,7 @@ export const AppDataSource = new DataSource({
   synchronize: configParsed.dev === 'true',
   logging: configParsed.debug === 'true',
   namingStrategy: new SnakeNamingStrategy(),
-  entities: [BookEntity],
+  entities: [BookEntity, UserEntity],
   migrations: migrations,
   migrationsRun: true
   // entities: ['src/infrastructure/adapters/type-orm/entities/*.ts'],
